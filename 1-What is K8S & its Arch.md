@@ -64,7 +64,20 @@ VMs fixed a lot—but they’re still too heavy for **hundreds or thousands of s
 - Instead of packaging **app + full OS**, containers package:
   - **App**
   - **Libraries & dependencies**
-  - But **share the host OS kernel**.   
+  - But **share the host OS kernel**.
+    
+Each service runs in its own container:
+
+- `auth-service` → Node.js  
+- `payment-service` → Python  
+- `catalog-service` → Go  
+
+Containers allow:
+- different languages  
+- different libraries  
+- independent scaling  
+- independent deployment  
+
 
 Think of a container as a **lightweight, isolated process** with its own filesystem, but not its own kernel.
 
