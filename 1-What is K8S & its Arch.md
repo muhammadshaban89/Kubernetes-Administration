@@ -5,18 +5,21 @@ Kubernetes is an open‑source, distributed system that automates deployment, sc
 But that sentence hides a massive architecture underneath.
 
 **High‑Level Architecture Overview**
+----
 
 A Kubernetes cluster is made of two major layers:
 
-1. Control Plane (Master Layer)
-The “brain” — makes decisions, stores cluster state, schedules workloads, and maintains desired state.
+**1. Control Plane (Master Layer)**
 
-2. Worker Nodes (Data Plane)
+The “brain”  that  makes decisions, stores cluster state, schedules workloads, and maintains desired state.
+
+**2. Worker Nodes (Data Plane)**
 The “hands” — run your applications inside Pods.
 
 Together, they form a Kubernetes Cluster — a self‑healing, scalable, distributed system.
 
-🏛️ Kubernetes Control Plane — Full Deep Dive
+**🏛️ Kubernetes Control Plane**
+
 The control plane ensures the cluster always matches the desired state (what you declare in YAML).
 
 It consists of four core components:
