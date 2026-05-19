@@ -172,7 +172,6 @@ Cluster reaches desired state
 Self‑healing begins.
 
 🧱 Complete Kubernetes Architecture Diagram
-
                 +---------------------------+
                 |       Control Plane       |
                 |---------------------------|
@@ -189,6 +188,7 @@ Self‑healing begins.
 |  kubelet      |  kube-proxy   | container runtime (CRI)    |
 |  Pods (containers)            |                            |
 +-------------------------------------------------------------+
+
 
 🟦 Summary Table — Control Plane vs Worker Node
 Component	Layer	Purpose
