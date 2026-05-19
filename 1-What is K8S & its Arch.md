@@ -329,6 +329,101 @@ kubectl apply -f deployment.yaml
 
 ---
 
+
+##  **Detailed Kubernetes Architecture — Logical Layout**
+
+```
+                        +---------------------------------------------+
+                        |               CONTROL PLANE                 |
+                        +---------------------------------------------+
+                        |                                             |
+                        |  +-------------------+                      |
+                        |  | kube-apiserver    | <----> kubectl CLI   |
+                        |  | REST API Gateway  |                      |
+                        |  +-------------------+                      |
+                        |           |                                 |
+                        |           v                                 |
+                        |  +-------------------+                      |
+                        |  | etcd (Cluster DB) | <--- stores all state|
+                        |  +-------------------+                      |
+                        |           ^                                 |
+                        |           |                                 |
+                        |  +-------------------+                      |
+                        |  | kube-scheduler    | <--- watches unsched.|
+                        |  | Pod placement     |     Pods             |
+                        |  +-------------------+                      |
+                        |           ^                                 |
+                        |           |                                 |
+                        |  +-------------------+                      |
+                        |  | controller-manager| <--- runs controllers|
+                        |  | Node, ReplicaSet, |     Job, Endpoint    |
+                        |  +-------------------+                      |
+                        +---------------------------------------------+
+                                        |
+                                        | Cluster Communication
+                                        v
++--------------------------------------------------------------------------------+
+|                                 WORKER NODES                                   |
++--------------------------------------------------------------------------------+
+|                                                                                |
+|  +-------------------+     +-------------------+     +-------------------+     |
+|  | kubelet           |     | kube-proxy        |     | Container Runtime |     |
+|  | Pod lifecycle mgr |     | Service networking|     | Runs containers   |     |
+|  +-------------------+     +-------------------+     +-------------------+     |
+|          |                         |                         |                |
+|          v                         v                         v                |
+|      +-------------------+   +-------------------+   +-------------------+     |
+|      | Pod (App)         |   | Pod (DB)          |   | Pod (Cache)       |     |
+|      | Containers + Vols |   | Containers + Vols |   | Containers + Vols |     |
+|      +-------------------+   +-------------------+   +-------------------+     |
+|                                                                                |
++--------------------------------------------------------------------------------+
+```
+
+---
+
+## 🔄 **Relationships Explained**
+
+| Component | Communicates With | Purpose |
+|------------|------------------|----------|
+| **kubectl** | kube‑apiserver | Sends commands (create, delete, scale) |
+| **kube‑apiserver** | etcd, scheduler, controller‑manager, kubelets | Central API hub |
+| **etcd** | kube‑apiserver | Stores cluster state |
+| **scheduler** | kube‑apiserver | Assigns Pods to nodes |
+| **controller‑manager** | kube‑apiserver | Maintains desired state |
+| **kubelet** | kube‑apiserver, container runtime | Executes Pod specs |
+| **kube‑proxy** | kube‑apiserver, network | Manages Service networking |
+| **container runtime** | kubelet | Runs containers |
+| **Pods** | kube‑proxy, Services | Host application workloads |
+
+---
+
+##  **Add‑Ons and Supporting Components**
+
+| Add‑On | Role |
+|--------|------|
+| **CoreDNS** | Internal DNS resolution for Services |
+| **Ingress Controller** | Manages external HTTP/HTTPS access |
+| **Metrics Server** | Provides resource metrics for autoscaling |
+| **CNI Plugin (Calico, Flannel, Cilium)** | Implements Pod networking |
+| **CSI Plugin** | Manages storage volumes |
+| **CRD (Custom Resource Definitions)** | Extends Kubernetes API |
+
+---
+
+## 🧱 **Data Flow Example**
+1. **kubectl apply -f deployment.yaml** → API Server validates request.  
+2. API Server stores desired state in **etcd**.  
+3. **Controller Manager** creates ReplicaSet → Pods.  
+4. **Scheduler** assigns Pods to Nodes.  
+5. **kubelet** pulls images and starts containers.  
+6. **kube‑proxy** updates networking rules.  
+7. Cluster reaches desired state.
+
+---
+
+
+
 #  Final Takeaway
 **Kubernetes = a distributed, self‑healing, declarative system that turns many machines into one unified compute platform.**
 
