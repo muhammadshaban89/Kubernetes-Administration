@@ -171,7 +171,8 @@ Updates networking rules.
 Cluster reaches desired state
 Self‑healing begins.
 
-🧱 Complete Kubernetes Architecture Diagram (Text Version)
+🧱 Complete Kubernetes Architecture Diagram
+
                 +---------------------------+
                 |       Control Plane       |
                 |---------------------------|
@@ -188,6 +189,7 @@ Self‑healing begins.
 |  kubelet      |  kube-proxy   | container runtime (CRI)    |
 |  Pods (containers)            |                            |
 +-------------------------------------------------------------+
+
 🟦 Summary Table — Control Plane vs Worker Node
 Component	Layer	Purpose
 kube‑apiserver	Control Plane	API gateway, validation, communication
