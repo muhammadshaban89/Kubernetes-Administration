@@ -1,9 +1,11 @@
 What Is Kubernetes (K8s)?
+-------------------------
 Kubernetes is an open‑source, distributed system that automates deployment, scaling, and management of containerized applications across clusters of machines.
 
 But that sentence hides a massive architecture underneath.
 
-High‑Level Architecture Overview
+**High‑Level Architecture Overview**
+
 A Kubernetes cluster is made of two major layers:
 
 1. Control Plane (Master Layer)
